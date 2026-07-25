@@ -1,44 +1,28 @@
 package com.clearpath.tests;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LoginTest {
 
-    public static void main(String[] args) {
+import com.clearpath.pages.LoginPage;
+import org.testng.annotations.Test;
+import org.testng.Reporter;
 
-        WebDriver driver = new ChromeDriver();
+public class LoginTest extends BaseTest {
+    @Test
+    public void verifyLogin() {
 
-        driver.manage().window().maximize();
+        test = extent.createTest("OrangeHRM Login Test");
 
-        driver.get("https://opensource-demo.orangehrmlive.com/");
+        test.info("Launching Browser");
 
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        LoginPage loginPage = new LoginPage(driver);
 
-        System.out.println(driver.getTitle());
-        String expectedRes = "Dashboard";
-        String ActualRes1 = "";
-        driver.findElement(By.name("username")).sendKeys("Admin");
+        test.info("Entering Username and password");
 
-        driver.findElement(By.name("password")).sendKeys("admin123");
+        String actualRes = loginPage.login("Admin","admin123");
 
-        driver.findElement(By.xpath("//button[@type='submit']")).click();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(driver.findElement(By.xpath("//h6[@class='oxd-text oxd-text--h6 oxd-topbar-header-breadcrumb-module']")).isDisplayed());
-        ActualRes1 = driver.findElement(By.xpath("//h6[@class='oxd-text oxd-text--h6 oxd-topbar-header-breadcrumb-module']")).getText();
-        if (ActualRes1.equals(expectedRes)) {
-            System.out.println("Login Successful!!");
-        } else {
-            System.out.println("Test Failed");
-        }
-       driver.quit();
+        test.info("Dashboard Loaded");
+
+        verifyValue(actualRes,"Dashboard");
+
+        test.pass("Login Successful");
     }
 }
