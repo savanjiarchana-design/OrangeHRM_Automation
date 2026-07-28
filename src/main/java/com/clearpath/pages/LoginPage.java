@@ -52,11 +52,11 @@ public class LoginPage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
     }
 
-    public String login(String username, String password) {
+    public String login(String username, String password, String xpathStr) {
         enterUsername(username);
         enterPassword(password);
         clickLogin();
-        String actualRes = waitForElement("//h6[@class='oxd-text oxd-text--h6 oxd-topbar-header-breadcrumb-module']").getText();
+        String actualRes = waitForElement(xpathStr).getText();
         return actualRes;
 
     }
