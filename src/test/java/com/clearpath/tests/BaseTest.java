@@ -22,9 +22,10 @@ public class BaseTest {
         extent = ExtentManager.getReport();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("https://opensource-demo.orangehrmlive.com/");
+        //driver.get("https://opensource-demo.orangehrmlive.com/");
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         try {
-            Thread.sleep(3000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
