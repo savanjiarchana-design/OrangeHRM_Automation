@@ -1,24 +1,30 @@
 package com.clearpath.data;
 
+import com.clearpath.utils.ExcelUtility;
 import org.testng.annotations.DataProvider;
 
 public class LoginDataProvider {
 
     @DataProvider(name = "loginData")
-    public Object[][] getLoginData() {
+    public Object[][] getLoginData() throws Exception {
 
-        return new Object[][]{
-                {"Verify login with valid credentials","Admin", "admin123", "Dashboard", "//h6[@class='oxd-text oxd-text--h6 oxd-topbar-header-breadcrumb-module']","smoke"},
+        String filePath = "src/main/resources/testdata/LoginData.xlsx";
 
-                {"Verify login with invalid password","Admin", "pwd123", "Invalid credentials", "//p[text()='Invalid credentials']","regression"},
+        ExcelUtility excel = new ExcelUtility(filePath, "LoginData");
 
-                {"Verify login with invalid username","user1", "admin123", "Invalid credentials", "//p[text()='Invalid credentials']","regression"},
+        int rows = excel.getRowCount();
+        int cols = excel.getColumnCount();
 
-                {"Verify login with invalid credentials for username and password","user2", "pwd123", "Invalid credentials", "//p[text()='Invalid credentials']","regression"},
+        Object[][] data = new Object[rows][cols];
 
-                {"Verify login with empty inputs","", "", "Required", "//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message']","regression"},
+        for (int i = 1; i <= rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                data[i - 1][j] = excel.getCellData(i, j);
+            }
+        }
 
-                {"Test to check proper screenshot is captured when test failed","Admin", "admin123", "Dashboard123", "//h6[@class='oxd-text oxd-text--h6 oxd-topbar-header-breadcrumb-module']","negative"}
-        };
+        excel.closeWorkbook();
+
+        return data;
     }
 }

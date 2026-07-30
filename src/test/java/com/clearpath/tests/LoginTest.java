@@ -1,8 +1,9 @@
 package com.clearpath.tests;
 import com.clearpath.base.BaseTest;
+import com.clearpath.data.LoginDataProvider;
 import com.clearpath.pages.LoginPage;
 import org.testng.annotations.Test;
-import com.clearpath.data.LoginDataProvider;
+import com.clearpath.data.LoginDataProvider_Org;
 
 public class LoginTest extends BaseTest {
 

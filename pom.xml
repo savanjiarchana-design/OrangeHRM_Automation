@@ -45,6 +45,12 @@
             <version>2.18.0</version>
         </dependency>
 
+        <!-- For Excel Data Provider-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.4.1</version>
+        </dependency>
 
 
     </dependencies>
