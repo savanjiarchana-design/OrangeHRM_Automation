@@ -1,6 +1,7 @@
 package com.clearpath.base;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
+import com.clearpath.utils.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
@@ -14,6 +15,7 @@ import com.clearpath.utils.ExtentManager;
 import org.testng.ITestResult;
 import com.clearpath.utils.ScreenshotUtility;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 import java.io.File;
 
@@ -23,20 +25,31 @@ public class BaseTest {
     public ExtentReports extent;
     public ExtentTest test;
 
-    @BeforeMethod
+    @BeforeSuite
+    @Parameters("configFile")
+    public void loadConfig(String configFile) {
+
+        ConfigReader.loadProperties(configFile);
+        extent = ExtentManager.getReport();
+    }
+
+   @BeforeMethod
     public void setup() {
 
         extent = ExtentManager.getReport();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        //driver.get("https://opensource-demo.orangehrmlive.com/");
-        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        // set browser
+        String browser = ConfigReader.getProperty("browser");
+
+        if(browser.equalsIgnoreCase("chrome")) {
+            driver = new ChromeDriver();
         }
-        System.out.println("Current URL: "+driver.getCurrentUrl()+" | Title: "+driver.getTitle());
+
+        // Full screen window
+        driver.manage().window().maximize();
+
+        // launch browser to open login page
+        driver.get(ConfigReader.getProperty("url"));
        }
 
     public void verifyValue(String actualRes, String expectedRes){

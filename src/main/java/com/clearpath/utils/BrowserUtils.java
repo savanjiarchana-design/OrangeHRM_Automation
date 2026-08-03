@@ -23,5 +23,15 @@ public class BrowserUtils {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
     }
 
+    public WebElement waitForVisibility(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public WebElement waitForClickable(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
 
 }

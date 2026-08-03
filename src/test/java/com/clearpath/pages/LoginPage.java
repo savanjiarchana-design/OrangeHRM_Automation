@@ -23,22 +23,25 @@ public class LoginPage {
     By btnLogin = By.xpath("//button[@type='submit']");
 
     public void enterUsername(String username) {
-        driver.findElement(txtUsername).sendKeys(username);
+        browserUtils.waitForVisibility(txtUsername).sendKeys(username);
     }
 
     public void enterPassword(String password) {
-        driver.findElement(txtPassword).sendKeys(password);
+        browserUtils.waitForVisibility(txtPassword).sendKeys(password);
     }
 
     public void clickLogin() {
-        driver.findElement(btnLogin).click();
-
+        browserUtils.waitForClickable(btnLogin).click();
     }
 
     public String login(String username, String password, String xpathStr) {
+
         enterUsername(username);
+
         enterPassword(password);
+
         clickLogin();
+
         return browserUtils.waitForElement(xpathStr).getText();
 
     }
